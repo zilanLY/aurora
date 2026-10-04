@@ -151,6 +151,16 @@ class Preferences {
     await sharedPreferencesIns?.setString(bootRecordKey, json.encode(record));
   }
 
+  Future<bool> getBuiltInSeeded() async {
+    final preferences = await sharedPreferencesCompleter.future;
+    return preferences?.getBool('builtInSeeded') ?? false;
+  }
+
+  Future<void> setBuiltInSeeded(bool value) async {
+    final preferences = await sharedPreferencesCompleter.future;
+    await preferences?.setBool('builtInSeeded', value);
+  }
+
   Future<void> clearPreferences() async {
     final sharedPreferencesIns = await sharedPreferencesCompleter.future;
     await sharedPreferencesIns?.clear();

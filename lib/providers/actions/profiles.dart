@@ -56,6 +56,27 @@ class ProfilesAction extends _$ProfilesAction {
     }
   }
 
+  /// Seeds the bundled subscription profile when the database is empty, so a
+  /// fresh install ships with usable lines instead of an empty profile list.
+  Future<void> seedBuiltInProfile() async {
+    if (ref.read(profilesProvider).isNotEmpty) return;
+    if (await preferences.getBuiltInSeeded()) return;
+    try {
+      final profile = Profile.normal(label: builtInGroupName);
+      final file = await profile.file;
+      await file.safeWriteAsString(buildBuiltInProfile());
+      final message = await _core.validateConfig(file.path);
+      if (message.isNotEmpty) throw MessageException(message);
+      putProfile(profile.copyWith(lastUpdateDate: DateTime.now()));
+      await preferences.setBuiltInSeeded(true);
+    } catch (error) {
+      commonPrint.log(
+        'seed built-in profile failed: ${compactError(error)}',
+        logLevel: LogLevel.warning,
+      );
+    }
+  }
+
   void putProfile(Profile profile, {Iterable<int> renameIn = const []}) {
     ref.read(profilesProvider.notifier).put(profile, renameIn: renameIn);
     if (ref.read(currentProfileIdProvider) != null) return;
