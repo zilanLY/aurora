@@ -1460,6 +1460,11 @@ class AppLocalizations {
     return Intl.message('Proxy group', name: 'proxyGroup', desc: '', args: []);
   }
 
+  /// `Best proxy`
+  String get bestProxy {
+    return Intl.message('Best proxy', name: 'bestProxy', desc: '', args: []);
+  }
+
   /// `Go`
   String get go {
     return Intl.message('Go', name: 'go', desc: '', args: []);

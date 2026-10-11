@@ -189,6 +189,7 @@
   "sort": "Sort",
   "columns": "Columns",
   "proxyGroup": "Proxy group",
+  "bestProxy": "Best proxy",
   "go": "Go",
   "externalLink": "External link",
   "otherContributors": "Other contributors",

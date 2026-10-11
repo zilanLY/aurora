@@ -1,4 +1,5 @@
 export 'connections.dart';
+export 'best_proxy.dart';
 export 'dns_queries.dart';
 export 'intranet_ip.dart';
 export 'network_detection.dart';

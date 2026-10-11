@@ -448,6 +448,7 @@ enum DashboardWidget {
   overrideNtpButton,
   runTime,
   proxyGroups,
+  bestProxy,
   profiles;
 
   final List<SupportPlatform> platforms;

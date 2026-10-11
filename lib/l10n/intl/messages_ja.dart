@@ -243,6 +243,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "システムの制限により、実行中は電池の最適化の状態を正しく取得できません",
     ),
     "behavior": MessageLookupByLibrary.simpleMessage("動作"),
+    "bestProxy": MessageLookupByLibrary.simpleMessage("最適なプロキシ"),
     "bind": MessageLookupByLibrary.simpleMessage("連携"),
     "blacklistMode": MessageLookupByLibrary.simpleMessage("ブラックリストモード"),
     "blockConnection": MessageLookupByLibrary.simpleMessage("接続をブロック"),

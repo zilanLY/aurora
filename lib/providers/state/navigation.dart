@@ -1,5 +1,10 @@
 part of '../state.dart';
 
+/// Simplified build: only the dashboard and the proxies page stay reachable.
+/// The rest of [navigation]'s items are still declared so their views keep a
+/// reference, but nothing filters them back in.
+const _simplifiedPageLabels = {PageLabel.dashboard, PageLabel.proxies};
+
 @riverpod
 NavigationItemsState navigationItemsState(Ref ref) {
   final openLogs = ref.watch(appSettingProvider).openLogs;
@@ -10,13 +15,16 @@ NavigationItemsState navigationItemsState(Ref ref) {
     currentGroupsStateProvider.select((state) => state.value.isNotEmpty),
   );
   final isInit = ref.watch(initProvider);
+  final items =
+      navigationPort?.getItems(
+        openLogs: openLogs,
+        hasProxies: !isInit ? hasProfiles : hasProxies,
+      ) ??
+      const [];
   return NavigationItemsState(
-    value:
-        navigationPort?.getItems(
-          openLogs: openLogs,
-          hasProxies: !isInit ? hasProfiles : hasProxies,
-        ) ??
-        const [],
+    value: items
+        .where((item) => _simplifiedPageLabels.contains(item.label))
+        .toList(),
   );
 }
 

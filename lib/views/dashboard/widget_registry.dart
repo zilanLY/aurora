@@ -90,6 +90,11 @@ extension DashboardWidgetView on DashboardWidget {
       crossAxisCellCount: 4,
       child: ProxyGroupsCard(),
     ),
+    DashboardWidget.bestProxy => const GridItem(
+      key: ValueKey(DashboardWidget.bestProxy),
+      crossAxisCellCount: 4,
+      child: BestProxy(),
+    ),
     DashboardWidget.profiles => const GridItem(
       key: ValueKey(DashboardWidget.profiles),
       crossAxisCellCount: 4,
