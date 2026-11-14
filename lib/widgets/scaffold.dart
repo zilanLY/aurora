@@ -532,8 +532,14 @@ class CommonScaffoldState extends State<CommonScaffold> {
                   clipBehavior: Clip.none,
                   automaticallyImplyLeading: false,
                   animateColor: true,
-                  // A searching bar carries its own opaque theme.
-                  forceMaterialTransparency: isBottomSheet || !_isSearch,
+                  // The bar paints its own surface: the floating header's
+                  // scrim only fades the overhang, and an opaque bar keeps a
+                  // transparent window backdrop (Windows acrylic) from
+                  // showing through the top of the page.
+                  forceMaterialTransparency: isBottomSheet,
+                  backgroundColor: _isSearch
+                      ? _searchingBackgroundColor
+                      : (widget.backgroundColor ?? context.colorScheme.surface),
                   toolbarHeight: isBottomSheet ? sheetToolbarHeight : null,
                   centerTitle: widget.centerTitle ?? isBottomSheet,
                   titleTextStyle: isBottomSheet
@@ -729,7 +735,8 @@ class CommonScaffoldState extends State<CommonScaffold> {
           extendBodyBehindAppBar: barFloats,
           body: content,
           resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
-          backgroundColor: widget.backgroundColor,
+          backgroundColor:
+              widget.backgroundColor ?? context.colorScheme.surface,
           floatingActionButton: fab,
         ),
       );
