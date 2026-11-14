@@ -62,6 +62,19 @@ void main() {
       expect(restored.excludeSSIDs, ['home']);
     });
 
+    test('saveConfig supports fresh installation defaults', () async {
+      final config = Config.realFromJson(null);
+
+      expect(await preferences.saveConfig(config), isTrue);
+      final restored = await preferences.getConfig();
+
+      expect(restored, isNotNull);
+      expect(
+        restored!.appSettingProps.dashboardWidgets,
+        defaultDashboardWidgets,
+      );
+    });
+
     test('getConfigMap returns null for malformed JSON', () async {
       await store.setString(configKey, 'not-json');
 
