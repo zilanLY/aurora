@@ -500,16 +500,6 @@ class CommonScaffoldState extends State<CommonScaffold> {
     return appBar;
   }
 
-  Widget _buildFloatingHeader(Widget appBar) {
-    final top = MediaQuery.paddingOf(context).top;
-    return FloatingHeader(
-      backgroundColor: widget.backgroundColor ?? context.colorScheme.surface,
-      fadeStart: top / (top + pageToolbarHeight),
-      overhang: _headerOverhang,
-      child: appBar,
-    );
-  }
-
   PreferredSizeWidget _buildAppBar(
     VoidCallback? backAction,
     _SheetForm form, {
@@ -532,10 +522,11 @@ class CommonScaffoldState extends State<CommonScaffold> {
                   clipBehavior: Clip.none,
                   automaticallyImplyLeading: false,
                   animateColor: true,
-                  // The bar paints its own surface: the floating header's
-                  // scrim only fades the overhang, and an opaque bar keeps a
-                  // transparent window backdrop (Windows acrylic) from
-                  // showing through the top of the page.
+                  // The bar paints its own opaque surface. The old floating
+                  // scrim (a gradient extending `overhang` below the bar)
+                  // rendered as a white band on Windows, so pages get a plain
+                  // opaque bar; bottom sheets keep their transparent bar and
+                  // scrim via FloatingHeaderBody.
                   forceMaterialTransparency: isBottomSheet,
                   backgroundColor: _isSearch
                       ? _searchingBackgroundColor
@@ -555,7 +546,7 @@ class CommonScaffoldState extends State<CommonScaffold> {
                   ),
                 ),
               );
-              return isBottomSheet ? appBar : _buildFloatingHeader(appBar);
+              return appBar;
             },
           ),
           ValueListenableBuilder(
@@ -1057,7 +1048,6 @@ class _SheetPop {
 const double appBarActionSpace = 4;
 
 const double _barButtonGap = 8;
-const double _headerOverhang = 16;
 const double _iconButtonTapPadding = 4;
 
 /// Where a filled button sits from the app bar edge, leading included: the
